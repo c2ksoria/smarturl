@@ -1,0 +1,16 @@
+#Folders Django
+Carrusel/business/__pycache__
+Carrusel/business/migrations/
+
+Carrusel/Carrusel/__pycache__
+
+Carrusel/media/
+Carrusel/images/
+
+
+Carrusel/members/__pycache__
+Carrusel/members/migrations
+
+
+Carrusel/.env
+poetry.lock

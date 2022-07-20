@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block name %}
+
+<a href="/empresa" class="d-block">{{empresa}}</a>
+
+{% endblock %}
+
+{% block wrapper %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-4">
+                    {% if titulo %}
+                    <h1 class="m-0">{{ titulo }}</h1>
+
+                    {% endif %}
+
+                    {% if titulo1 %}
+                    <h1 class="m-0">{{ titulo1 }}</h1>
+
+                    {% endif %}
+                    
+                    {% if multimediaDisponibles > 0 %}
+                    
+                    <a href="multimedia/add"><button class="btn btn-primary">Crear Multimedia</button></a>
+                    <!-- <a href="{% url 'createcampana' %}"><button class="btn btn-primary">Crear Nueva Campaña</button></a> -->
+                    <a>
+                        <p>Quedan {{ multimediaDisponibles }} multimedias</p>
+
+                    </a>
+                    {% else %}
+                    <a href="/plan">Ya no puedes agregar archivos multimedia; favor de subir de Plan...</a>
+                    {% endif %}
+                </div><!-- /.col -->
+                <div class="col-sm-4 justify-content-end">
+                    <!--  -->
+                    <!-- <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Starter Page</li>
+          </ol> -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <!-- <h2>Holass1 </h2>
+        <h1>{{ empresa}}</h1> -->
+
+            <div>
+                {% if object_list %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Texto</th>
+                            <th>Estado</th>
+                            <th>Imagen</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in object_list%}
+                        <tr>
+                            <th><a href="/multimedia/{{item.id}}">{{ item.NombreMultimedia }}</a></th>
+                            <th>{{ item.Texto }}</th>
+
+                            <th>{{ item.estado }}</th>
+
+                            <th><img src="{{item.Imagen.url}}" alt="" style="max-height:100px"></th>
+                            <th>
+                                <a href="/multimedia/delete/{{item.id}}"><button type="button"
+                                        class="btn btn-secondary btn-xs"><i class="bi bi-trash"></i></button></a>
+                                <button type="button" class="btn btn-warning btn-xs"><i class="bi bi-stop-fill"
+                                        style="color: red"></i></button></i>
+
+                                <button type="button" class="btn btn-primary btn-xs">
+                                    <i class="bi bi-clipboard" onclick="copy('{{" copiar"}}{{item.id}}')"></i></button>
+                            </th>
+
+                        </tr>
+                        {% endfor%}
+                </table>
+
+                {% else %}
+
+                <div class="jumbotron">
+                    <h1 class="display-4">No hay archivos multimedia</h1>
+                    <p class="lead">Favor de subir un archivo ...</p>
+                    <hr class="my-4">
+                    <p>Buscamos agregar imágenes y texto a la campaña</p>
+                    <p>Debes hacer click sobre el boton de "crear Multimedia" y completar los campos del formulario</p>
+                </div>
+                {% endif %}
+
+
+                <script>
+                    function copy(dato) {
+                        var copyText = document.getElementById(dato);
+                        var textArea = document.createElement("textarea");
+                        textArea.value = copyText.textContent;
+                        console.log(textArea.value)
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("Copy");
+                        textArea.remove();
+                    }</script>
+
+                {% if items %}
+                {% for item in items %}
+                <h1>
+                    {{ item.NombreItem }}
+                </h1>
+                {% endfor%}
+                {% endif %}
+
+                <div>
+                    {% for item in object_list%}
+                    <H2>{{ item.NombreEmpresa}}</H2>
+                    {% endfor %}
+
+
+
+
+                </div>
+
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{% endblock wrapper %}

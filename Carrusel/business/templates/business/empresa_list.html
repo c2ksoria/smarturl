@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block name %}
+    <a href="#" class="d-block">{{empresa}}</a>
+{% endblock %}
+
+{% block wrapper %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-4">
+            {% if titulo %}
+            <h1 class="m-0">{{ titulo }}</h1>
+  
+            {% endif %}
+  
+          </div><!-- /.col -->
+          <div class="col-sm-4 justify-content-end">
+
+           {% if object_list %}
+              
+            {% for item in object_list %}
+           <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">{{ item.NombreEmpresa }}</h3>
+            </div> <!-- /.card-body -->
+            <div class="card-body">
+              <div >
+                <strong>Dirección: </strong><p>{{ item.DireccionEmpresa}}</p>  
+                <strong>Cuit: </strong><p>{{ item.CuitEmpresa}}</p>  
+                <strong>Nombre de Usuario</strong><p>{{ item.Usuario.username}}</p>  
+                <strong>Email </strong><p>{{ item.Usuario.email }}</p>  
+                <strong>Paquete Contratado </strong><p>{{ item.PaqueteContratado.NombrePaquete }}</p>  
+                <img src ="{{item.Logo.url}}" alt="" style="max-height:100px" class="img-circle elevation-2">
+
+                
+
+              </div>
+
+            </div><!-- /.card-body -->
+          </div>
+          {% endfor %}
+          {% endif %}
+            <!-- <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Starter Page</li>
+            </ol> -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+  
+    <!-- Main content -->
+
+
+  {% endblock %}
+  

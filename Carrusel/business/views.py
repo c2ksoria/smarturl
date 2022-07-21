@@ -63,13 +63,7 @@ class CampanaView(ListView):
         user = self.request.user
         queryset = super().get_queryset(*args, **kwargs)
         empresa_nombre=Empresa.objects.get(Usuario=user.id)
-        # print(empresa_nombre.id)
-        # print(type(empresa_nombre))
-        # print("-------------")
-        # Filtrado por empresa!
         queryset = queryset.filter(empresa=empresa_nombre.id)
-        # print("-------------")
-
         return queryset
     
     def get_context_data(self, **kwargs):
@@ -80,12 +74,8 @@ class CampanaView(ListView):
         context['empresa']= empresa_nombre.NombreEmpresa
         print("------------------")
         paqueteContratado=empresa_nombre.PaqueteContratado
-        # print(paqueteContratado.CantCampana)
-        # print("------------------")
         campanaContratadas=Campana.objects.filter(empresa=empresa_nombre).count()
-        # print(campanaContratadas)
         campanaDisponibles=paqueteContratado.CantCampana-campanaContratadas
-        # print(campanaDisponibles)
         context['campanaDisponibles']= campanaDisponibles
 
         return context
@@ -93,22 +83,8 @@ class CampanaView(ListView):
 class UpdateCampanaView(UpdateView):
     model=Campana
     form_class = UpdateFormCampana
-    # template_name: 'campana.html'
-    # fields = [
-    #     "estado",
-    #     "NombreCampana",
-    #     "Temporizado",
-    #     "url"
-    # ]
     success_url ="/campana"
-    # def get_queryset(self, *args, **kwargs):
-    #     user = self.request.user
-    #     empresa_usuario = Empresa.objects.filter(usuario=user)
-    #     print(empresa_usuario)
-    #     queryset = super().get_queryset(*args, **kwargs)
-    #     # queryset=queryset.filter(empresa=Campana.empresa)
-    #     return queryset
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Editar Datos de Campaña'
@@ -136,60 +112,20 @@ class MultimediaView(ListView):
             print("si existe.......------")
             multimedia=Multimedia.objects.all()
             multi=multimedia.filter(capana_id=get_id)
-            # for items in multi.iterator():
-            #     print(items)
             return multi
             print("------------------")
         except:
             print("no existe..----------")
             multimedia1=Multimedia.objects.filter(pk=0)
-            # context = super().get_context_data(**kwargs)
-            # context['titulo1'] = 'eroorrrorro!!!'
             return multimedia1
-        
-        
-        # user = self.request.user
-        # if (empresa_nombre=Empresa.objects.get(Usuario=user.id)
-        # print(type(queryset))
-        # print("------------------")
-        # print(queryset)
 
-        # multimedia=multimedia.objects.filter(id=3)
-        # ().filter(pk=get_id)
-        # .filter(pk=get_id).filter(capana=campana)
-        # print(campana[0].NombreCampana)
-        
-
-       
-        # if (multimedia.exists()):
-        #     print("hacer todo lo actual")
-            
-            
-        #     # for items in queryset:
-        #     #     print(items.capana)
-        #     return multimedia
-        # else:
-        #     print("enviar un mensaje que no existe la campaña ")
-        #     return queryset
-        # print(empresa_nombre.id)
-        # print(type(empresa_nombre))
-        # print("-------------")
-        # Filtrado por empresa!
-        # queryset = queryset.filter(empresa=empresa_nombre.id)
-
-        # print("-------------")
-        # print(queryset)
-
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Multimedia'
         user = self.request.user
         empresa_nombre=Empresa.objects.get(Usuario=user.id)
         context['empresa']= empresa_nombre.NombreEmpresa
-        
         paqueteContratado=empresa_nombre.PaqueteContratado
-
         get_id=Get_Id_Empresa(self.request)
         CantidadMultimedia=Multimedia.objects.filter(capana=get_id).count()
         print(CantidadMultimedia)
@@ -211,21 +147,7 @@ def Get_Id_Empresa(request):
 class MultimediaUpdateView(UpdateView):
     model=Multimedia
     form_class = UpdateFormMultimedia
-    # template_name: 'campana.html'
-    # fields = [
-    #     "estado",
-    #     "NombreCampana",
-    #     "Temporizado",
-    #     "url"
-    # ]
     success_url ="/campana"
-    # def get_queryset(self, *args, **kwargs):
-    #     user = self.request.user
-    #     empresa_usuario = Empresa.objects.filter(usuario=user)
-    #     print(empresa_usuario)
-    #     queryset = super().get_queryset(*args, **kwargs)
-    #     # queryset=queryset.filter(empresa=Campana.empresa)
-    #     return queryset
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -245,16 +167,9 @@ class CreateCampanaView(CreateView):
     def form_valid(self, form):
         user = self.request.user
         empresa_nombre=Empresa.objects.get(Usuario=user.id)
-  
         form.instance.empresa = empresa_nombre
         form.save()
-
         current_url = self.request
-
-        # print("-------------current_url--------------")
-        # print(id_Campana)
-        # print(current_url)
-        # print("---------------------------------------")
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
@@ -271,8 +186,7 @@ class CreateMultimediaView(CreateView):
     model=Multimedia
     form_class= CreateFormMultimedia
     template_name= 'createMultimedia.html'
-    # success_url=reverse_lazy('campana')
-
+   
     def get_success_url(self, *args, **kwargs):
         return reverse_lazy('multimedia', args=[self.kwargs['pk']])
 
@@ -285,38 +199,13 @@ class CreateMultimediaView(CreateView):
         print(context)
         return context
     
-    # def get_form_kwargs(self):
-    #     kwargs = super(CreateMultimediaView, self).get_form_kwargs()
-    #     kwargs['capana']=2
-    #     print("------get form kwargs------")
-    #     print(kwargs)
-    #     print("---------------------------")
-    #     return kwargs
-
     def form_valid(self, form):
         id_Campana=self.kwargs['pk']
-        # user = self.request.user
-        # empresa_nombre=Empresa.objects.get(Usuario=user.id)
-        # campana=Campana.objects.get(NombreCampana='Pantalla Av. Libertador1')
         campana=Campana.objects.get(id=id_Campana)
         form.instance.capana = campana
         form.save()
-
         current_url = self.request
-
-        # print("-------------current_url--------------")
-        # print(id_Campana)
-        # print(current_url)
-        # print("---------------------------------------")
         return super().form_valid(form)
-
-
-    # def post(self,request,*args, **kwargs):
-    #     form = self.get_form()
-    #     print("---------FORM----------")
-    #     print(form)
-    #     print("---------------------------")
-    #     return HttpResponseRedirect(self.get_success_url())
 
 class DeleteCampanaView(DeleteView):
     model = Campana

@@ -18,5 +18,4 @@ urlpatterns = [
     path('multimedia/<slug:pk>/', MultimediaUpdateView.as_view(),name='updateMultimedia'),
     path('multimedia/delete/<slug:pk>/', DeleteMultimediaView.as_view(),name='deleteMultimedia'),
     path('plan/', PaqueteViewAdmin.as_view(),name='paquete'),
-
 ]

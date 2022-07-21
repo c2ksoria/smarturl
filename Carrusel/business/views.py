@@ -1,7 +1,7 @@
 from queue import Empty
 # from re import I
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, TemplateView, DeleteView
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 # from requests import request
 
 from .models import Empresa, Campana, Multimedia, Paquete
@@ -9,6 +9,8 @@ from .form import UpdateFormCampana, UpdateFormMultimedia, CreateFormCampana, Cr
 from urllib.parse import urlparse
 from django.urls import resolve
 from django.urls import reverse_lazy
+from Carrusel.views import error_404
+from django.http import Http404
 # Create your views here.
 
 def home1(request, id):
@@ -38,6 +40,7 @@ def home1(request, id):
 
 def home(request):
     return render(request,'home.html')
+
 class EmpresaView(ListView):
     model=Empresa
     template_name: 'empresa.html'
@@ -109,15 +112,11 @@ class MultimediaView(ListView):
     
         try:
             campana=Campana.objects.get(pk=get_id)
-            print("si existe.......------")
             multimedia=Multimedia.objects.all()
             multi=multimedia.filter(capana_id=get_id)
             return multi
-            print("------------------")
         except:
-            print("no existe..----------")
-            multimedia1=Multimedia.objects.filter(pk=0)
-            return multimedia1
+            raise Http404()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -128,20 +127,20 @@ class MultimediaView(ListView):
         paqueteContratado=empresa_nombre.PaqueteContratado
         get_id=Get_Id_Empresa(self.request)
         CantidadMultimedia=Multimedia.objects.filter(capana=get_id).count()
-        print(CantidadMultimedia)
+        # print(CantidadMultimedia)
         multimediaDisponible= paqueteContratado.CantFoto-CantidadMultimedia
-        print(multimediaDisponible)
+        # print(multimediaDisponible)
         context['multimediaDisponibles']= multimediaDisponible
         return context
 
 def Get_Id_Empresa(request):
-        print(request.user)
+        # print(request.user)
         current_url = request.path_info
-        print(current_url)
-        print(current_url.split('/'))
+        # print(current_url)
+        # print(current_url.split('/'))
         all_path=current_url.split('/')
         get_id=all_path[2]
-        print(get_id)
+        # print(get_id)
         return get_id
 
 class MultimediaUpdateView(UpdateView):
@@ -240,3 +239,5 @@ class PaqueteViewAdmin(ListView):
         context['titulo']= "Planes Disponibles"
         print("Plan Contratado............",planContratado)
         return context
+
+

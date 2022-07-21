@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from business.form import CreateFormMultimedia
-from .views import CreateMultimediaView, PaqueteViewAdmin, UpdateCampanaView, CampanaView, EmpresaView, home, multimedia, MultimediaView, MultimediaUpdateView, CreateCampanaView, DeleteCampanaView, DeleteMultimediaView, home, error_404_view
+from .views import CreateMultimediaView, PaqueteViewAdmin, UpdateCampanaView, CampanaView, EmpresaView, home, multimedia, MultimediaView, MultimediaUpdateView, CreateCampanaView, DeleteCampanaView, DeleteMultimediaView, home
 
 urlpatterns = [
     # path('publi/<str:id>', home, name='home'),

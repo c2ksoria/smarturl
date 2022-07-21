@@ -351,9 +351,3 @@ class PaqueteViewAdmin(ListView):
         context['titulo']= "Planes Disponibles"
         print("Plan Contratado............",planContratado)
         return context
-    
-def error_404_view(request, exception):
-    print("error 404-------")
-    # we add the path to the the 404.html file
-    # here. The name of our HTML file is 404.html
-    return render(request, '404.html')

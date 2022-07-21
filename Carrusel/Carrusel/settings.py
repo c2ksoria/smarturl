@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -129,7 +129,7 @@ MEDIA_URL = '/media/'
 # Path where media is stored  
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'empresa'
 LOGOUT_REDIRECT_URL = 'home'
 
 STATICFILES_DIRS = (

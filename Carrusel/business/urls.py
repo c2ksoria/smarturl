@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 from business.form import CreateFormMultimedia
-from .views import CreateMultimediaView, PaqueteViewAdmin, UpdateCampanaView, CampanaView, EmpresaView, home, multimedia, MultimediaView, MultimediaUpdateView, CreateCampanaView, DeleteCampanaView, DeleteMultimediaView, home
+from .views import CreateMultimediaView, PaqueteViewAdmin, UpdateCampanaView, CampanaView, EmpresaView, home, multimedia, MultimediaView, MultimediaUpdateView, CreateCampanaView, DeleteCampanaView, DeleteMultimediaView, home, home1
 
 urlpatterns = [
-    # path('publi/<str:id>', home, name='home'),
+    path('publi/<str:id>/', home1, name='home1'),
     # path('carrousel/', CarrouselView.as_view(),name='carrouselView'),
     path('',home,name='home'),
     path('empresa/', EmpresaView.as_view(),name='empresa'),

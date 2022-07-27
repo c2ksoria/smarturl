@@ -11,32 +11,15 @@ from django.urls import resolve
 from django.urls import reverse_lazy
 from Carrusel.views import error_404
 from django.http import Http404
+from django.db.models import Q
 # Create your views here.
 
 def home1(request, id):
-    print("++++++++++++++++")
-    print(id)
-    
-    campana1=Campana.objects.all().get(url=id)
-    print(campana1.Temporizado)
-    campana=campana1
+    campana=Campana.objects.get(url=id)
     temporizado= campana.Temporizado
-    print("++++++++++++++++")
-    # print(campana1)
-    # print(campana.url)
-    # print(campana.Temporizado)
-    # print(campana.empresa)
-    # for item in campana:
-    #     print(item)
-    multimedia=Multimedia.objects.filter(capana=campana1)
-    # print(multimedia)
-    # for item in multimedia:
-    #     print(item)
-    print("++++++++++++++++")
-    # print(type(campana1))
-    # print(temporizado)
-    print("++++++++++++++++")
-    return render(request, 'carrousel.html', {'multimedia':multimedia, 'temporizado': temporizado})
+    multimedia=Multimedia.objects.all().filter(capana_id = campana )
+    return render(request, 'carrousel.html', {'multimedia': multimedia, 'temporizado':temporizado})
+
 
 def home(request):
     return render(request,'home.html')
@@ -109,7 +92,7 @@ class MultimediaView(ListView):
         user = self.request.user
         queryset = super().get_queryset(*args, **kwargs)
         get_id=Get_Id_Empresa(self.request)
-    
+
         try:
             campana=Campana.objects.get(pk=get_id)
             multimedia=Multimedia.objects.all()

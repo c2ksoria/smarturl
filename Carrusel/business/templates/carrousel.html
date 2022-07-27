@@ -22,17 +22,17 @@
     <div class="carousel-inner">
 
     {% if multimedia %}
-    {% for item in multimedia%}
-    {% if forloop.first %}
-    <div class="carousel-item active" data-bs-interval="1">
-      <img src="..." class="d-block w-100" alt="...">
-    </div> 
-      {% else %}
-      <div class="carousel-item" data-bs-interval="{{ temporizado }}">
-        <img src="{{ item.Imagen.url }}" class="d-block w-100" alt="...">
-      </div>
-      {% endif %}
-      {% endfor %}
+      {% for item in multimedia%}
+          {% if forloop.first %}
+          <div class="carousel-item active" data-bs-interval="{{ temporizado }}">
+            <img src="{{ item.Imagen.url }}" class="d-block w-100" alt="...">
+          </div> 
+          {% else %}
+            <div class="carousel-item" data-bs-interval="{{ temporizado }}">
+              <img src="{{ item.Imagen.url }}" class="d-block w-100" alt="...">
+            </div>
+          {% endif %}
+        {% endfor %}
       {% endif %}
     </div>
   </div>

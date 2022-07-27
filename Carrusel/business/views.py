@@ -17,8 +17,13 @@ from django.db.models import Q
 def home1(request, id):
     campana=Campana.objects.get(url=id)
     temporizado= campana.Temporizado
-    multimedia=Multimedia.objects.all().filter(capana_id = campana )
-    return render(request, 'carrousel.html', {'multimedia': multimedia, 'temporizado':temporizado})
+    try:
+        multimedia=Multimedia.objects.all().filter(capana_id = campana)
+        for item in multimedia:
+            print(item.Imagen)
+        return render(request, 'carrousel.html', {'multimedia': multimedia, 'temporizado':temporizado})
+    except:
+        raise Http404()
 
 
 def home(request):

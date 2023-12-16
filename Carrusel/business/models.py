@@ -56,3 +56,7 @@ class Multimedia(models.Model):
 
     def __str__(self):
         return self.Texto
+
+class Data(models.Model):
+    Nombre=models.CharField(max_length=50, blank=True, verbose_name='Nombre Ítem')
+    Imagen= models.ImageField(upload_to='campana/', null=True, blank=False)

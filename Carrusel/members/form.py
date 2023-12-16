@@ -1,7 +1,5 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from django.forms import ModelForm
-
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(

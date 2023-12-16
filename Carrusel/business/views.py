@@ -4,7 +4,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, T
 from django.shortcuts import render, HttpResponse, redirect
 # from requests import request
 
-from .models import Empresa, Campana, Multimedia, Paquete
+from .models import Empresa, Campana, Multimedia, Paquete, Data
 from .form import UpdateFormCampana, UpdateFormMultimedia, CreateFormCampana, CreateFormMultimedia
 from urllib.parse import urlparse
 from django.urls import resolve
@@ -15,15 +15,27 @@ from django.db.models import Q
 # Create your views here.
 
 def home1(request, id):
-    campana=Campana.objects.get(url=id)
-    temporizado= campana.Temporizado
     try:
-        multimedia=Multimedia.objects.all().filter(capana_id = campana)
-        for item in multimedia:
-            print(item.Imagen)
-        return render(request, 'carrousel.html', {'multimedia': multimedia, 'temporizado':temporizado})
+        campana=Campana.objects.get(url=id)
+        temporizado= campana.Temporizado
     except:
         raise Http404()
+    print(campana.estado)
+    if (campana.estado_id==1):
+        print("Campaña Activa!!")
+        try:
+            multimedia=Multimedia.objects.all().filter(capana_id = campana, estado_id=1)
+            print("EXISTEEEEE")
+
+        except:
+            print("NO EXISTEEE")
+            raise Http404()
+    else:
+        print("Campaña Suspendida!!!")
+        data=Data.objects.all()
+        multimedia=data    
+    print("----------FIN!!!----------")
+    return render(request, 'carrousel.html', {'multimedia': multimedia})
 
 
 def home(request):

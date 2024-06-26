@@ -25,6 +25,8 @@ def home1(request, id):
         print("Campaña Activa!!")
         try:
             multimedia=Multimedia.objects.all().filter(capana_id = campana, estado_id=1)
+            for item in multimedia:
+                print(item)
             print("EXISTEEEEE")
 
         except:
@@ -35,7 +37,7 @@ def home1(request, id):
         data=Data.objects.all()
         multimedia=data    
     print("----------FIN!!!----------")
-    return render(request, 'carrousel.html', {'multimedia': multimedia})
+    return render(request, 'carrousel.html', {'multimedia': multimedia, 'temporizado': temporizado})
 
 
 def home(request):
